@@ -52,6 +52,35 @@ button {
   
 }
 
+#listagens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80%;
+}
+
+ul {
+  margin: 1rem;
+  padding: 1rem;
+  text-align: center;
+  width: 300px;
+}
+
+.list0 {
+
+  border: 3px solid rgb(112, 122, 216);
+  background-color: lightblue;
+}
+
+.list1 {
+
+  border: 3px solid palevioletred;
+  background-color: lightpink;
+}
+li {
+  list-style: none;
+}
+
 @media (max-width: 600px) {
   .container {
     margin: 20px;

@@ -7554,6 +7554,7 @@ const input = document.querySelector("#input");
 const submit = document.querySelector("#submit");
 const result = document.querySelector("#result");
 const suggestion = document.querySelector("#suggestion");
+const listagens = document.querySelector('#listagens')
 
 const calculateDistance = (a, b) => {
   const distances = [];
@@ -7658,7 +7659,62 @@ const findName = () => {
   }
 }
 
-submit.addEventListener("click", findName);
+function closestMatches(word, array1, array2) {
+  const getDistance = (a, b) => {
+      a = a.toLowerCase();
+      b = b.toLowerCase();
+      if (a.length === 0) return b.length;
+      if (b.length === 0) return a.length;
+      let i, j, prev, val;
+      let curr = Array(b.length + 1);
+      for (i = 0; i <= b.length; i++) curr[i] = i;
+      for (i = 1; i <= a.length; i++) {
+          prev = curr.slice();
+          curr[0] = i;
+          for (j = 1; j <= b.length; j++) {
+              val = a[i - 1] === b[j - 1] ? prev[j - 1] : 1 + Math.min(prev[j - 1], prev[j], curr[j - 1]);
+              curr[j] = val;
+          }
+      }
+      return curr[b.length];
+  };
+  word = word.toLowerCase();
+  const closest = (word, array, n) => array
+      .map(w => w.toLowerCase())
+      .filter(w => w !== word)
+      .map(w => [w, getDistance(word, w)])
+      .sort((a, b) => a[1] - b[1])
+      .slice(0, n)
+      .map(a => a[0]);
+
+      //Neste caso n = 5, para ter mais/menos resultados basta alterar o valor de n
+  return [closest(word, array1, 5), closest(word, array2, 5)];
+}
+
+const appendListItems = () => {
+  closestMatches(input.value, nomesMasculinos, nomesFemininos).map((item, i) => {
+    const list = document.getElementById(`list${i}`)
+    list.innerHTML=''
+    list.classList.add(`list${i}`)
+    item.map(nome => {
+      const li = document.createElement('li')
+      const anchor = document.createElement('a')
+      anchor.href=nome;
+      anchor.textContent = `${nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase()}`;
+      // li.appendChild(document.createTextNode(nome));
+      li.appendChild(anchor)
+      list.appendChild(li)
+    })
+    listagens.appendChild(list)
+  })
+}
+
+
+
+submit.addEventListener("click", ()=> {
+  findName()
+  appendListItems()
+});
 suggestion.addEventListener ('click', (event)=>{
   event.preventDefault()
   input.value = event.target.textContent
@@ -7667,4 +7723,5 @@ suggestion.addEventListener ('click', (event)=>{
 input.addEventListener('keypress', (event) => {
   if (event.which !== 13) return
   findName()
+  appendListItems()
 })
