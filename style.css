@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 20px;
+  margin: 20px 0;
+  width: 50%;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 20px;
+  margin: 20px 0;
+  background-color: lightblue;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#result {
+
+  border-radius: 10px;
+}
+
+#result.fem{
+  padding: 1rem;
+  border: 3px solid palevioletred;
+  background-color: lightpink;
+}
+
+#result.mas{
+  padding: 1rem;
+  border: 3px solid rgb(112, 122, 216);
+  background-color: lightblue;
+}
+
+#result.uni{
+  padding: 1rem;
+  border: 3px solid rgb(206, 129, 239);
+  background: linear-gradient(90deg, lightblue 0%, lightpink 100%);
+}
+
+
+#suggestion {
+  font-size: 20px;
+  margin: 20px 0;
+  
+}
+
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+  }
+}
